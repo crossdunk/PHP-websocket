@@ -51,10 +51,11 @@ while (true) {
 			$tst_msg = json_decode($received_text); //json decode 
 			$user_name = $tst_msg->name; //sender name
 			$user_message = $tst_msg->message; //message text
-			$user_color = $tst_msg->color; //color
-			
+			$user_color = $tst_msg->color; //nickname color
+			$user_text_color = $tst_msg->text_color;//text color
+
 			//prepare data to be sent to client
-			$response_text = mask(json_encode(array('type'=>'usermsg', 'name'=>$user_name, 'message'=>$user_message, 'color'=>$user_color)));
+			$response_text = mask(json_encode(array('type'=>'usermsg', 'name'=>$user_name, 'message'=>$user_message, 'color'=>$user_color,'text_color'=>$user_text_color)));
 			send_message($response_text); //send data
 			break 2; //exist this loop
 		}

@@ -38,6 +38,24 @@ $user_colour = array_rand($colours);
 
 <div class="chat_wrapper">
 <div class="message_box" id="message_box"></div>
+<div class='chose_color'>
+暱稱顏色<select id='chose_color'>
+	<option value='F4244E'>紅色</option>
+	<option value='FA7C58'>橙色</option>
+	<option value='F773ED'>粉色</option>
+	<option value='41A516'>綠色</option>
+	<option value='28A3D0'>藍色</option>
+	<option value='886DF3'>紫色</option>
+</select>
+字的顏色<select id='chose_color_text'>
+	<option value='F4244E'>紅色</option>
+	<option value='FA7C58'>橙色</option>
+	<option value='F773ED'>粉色</option>
+	<option value='41A516'>綠色</option>
+	<option value='28A3D0'>藍色</option>
+	<option value='886DF3'>紫色</option>
+</select>
+</div>
 <div class="panel">
 <input type="text" name="message" id="message" placeholder="Message" maxlength="80" style="width:80%" />
 <button id="send-btn">Send</button>
@@ -77,6 +95,8 @@ $user_colour = array_rand($colours);
 
 	$('#send-btn').click(function(){ //use clicks message send button	
 		var mymessage = $('#message').val(); //get message text
+		var color = $('#chose_color').val(); //nickname color
+		var text_color = $('#chose_color_text').val(); //message color
 		if(nickname == ""){ //empty name?
 			alert("請輸入暱稱");
 			return;
@@ -90,7 +110,8 @@ $user_colour = array_rand($colours);
 		var msg = {
 		message: mymessage,
 		name: nickname,
-		color : '<?php echo $colours[$user_colour]; ?>'
+		color : color,
+		text_color:text_color
 		};
 		//convert and send data to server
 		websocket.send(JSON.stringify(msg));
@@ -102,11 +123,11 @@ $user_colour = array_rand($colours);
 		var type = msg.type; //message type
 		var umsg = msg.message; //message text
 		var uname = msg.name; //user name
-		var ucolor = msg.color; //color
-
+		var ucolor = msg.color; //nickname color
+		var utext_color = msg.text_color
 		if(type == 'usermsg') 
 		{
-			$('#message_box').append("<div><span class=\"user_name\" style=\"color:#"+ucolor+"\">"+uname+"</span> : <span class=\"user_message\">"+umsg+"</span></div>");
+			$('#message_box').append("<div><span class=\"user_name\" style=\"color:#"+ucolor+"\">"+uname+"</span> : <span class=\"user_message\" style=\"color:#"+utext_color+"\">"+umsg+"</span></div>");
 		}
 		if(type == 'system')
 		{
