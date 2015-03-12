@@ -33,7 +33,7 @@ while (true) {
 		perform_handshaking($header, $socket_new, $host, $port); //perform websocket handshake
 		
 		socket_getpeername($socket_new, $ip); //get ip address of connected socket
-		$response = mask(json_encode(array('type'=>'system', 'message'=>$ip.' connected'))); //prepare json data
+		$response = mask(json_encode(array('type'=>'system', 'message'=>$ip.' 加入對話 '))); //prepare json data
 		send_message($response); //notify all users about new connection
 		
 		//make room for new socket
